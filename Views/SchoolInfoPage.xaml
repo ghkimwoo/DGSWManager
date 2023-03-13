@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DGSWManager.Views.SchoolInfoPage"
+             Title="학교 정보">
+
+    <Grid   Margin="20, 20, 20, 20"
+            RowSpacing="{OnPlatform Default=6, WinUI=20, MacCatalyst=20}"
+            ColumnSpacing="{OnPlatform Default=6, WinUI=20, MacCatalyst=20}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition />
+            <RowDefinition Height="200"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+            <Button
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+                BorderColor="Black"
+                BackgroundColor="{AppThemeBinding Dark=#102A43}"
+                Clicked="testButton_Clicked"/>
+            <Label
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+                Text="해야할 일이 없습니다."
+                FontSize="Medium"
+                FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+            <Frame
+                Grid.Row="1"
+                BorderColor="Black"
+                BackgroundColor="{AppThemeBinding Dark=#334E68}"/>
+        <Label
+                Grid.Row="1"
+                Text="학사 일정"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+        <Frame
+                Grid.Row="1"
+                Grid.Column="1"
+                BorderColor="Black"
+                BackgroundColor="{AppThemeBinding Dark=#334E68}"/>
+        <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                Text="시간표"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+        <Frame Grid.Row="2"
+               Grid.ColumnSpan="2"
+               BorderColor="Black"
+               BackgroundColor="{AppThemeBinding Dark=#486581}"/>
+        <Label
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            Text="클래스룸 과제 확인"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"/>
+    </Grid>
+
+</ContentPage>
