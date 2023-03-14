@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace DGSWManager.Models
 {
-    internal class CorpInfoModel
+    public class CorpInfoModel
     {
+        public string bizNo { get; set; }
+        public string taxType { get; set; }
     }
 }

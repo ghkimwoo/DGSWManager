@@ -1,3 +1,4 @@
+using DGSWManager.ViewModels;
 namespace DGSWManager.Views.company;
 
 public partial class CompanyRegister : ContentPage
@@ -10,6 +11,6 @@ public partial class CompanyRegister : ContentPage
     private void OkButton_Clicked(object sender, EventArgs e)
     {
 		int bizNo = int.Parse(BizNoEntry.Text);
-
+		
     }
 }
