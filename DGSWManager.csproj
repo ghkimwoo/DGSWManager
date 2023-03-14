@@ -72,11 +72,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Database\" />
-	  <Folder Include="Views\" />
-	</ItemGroup>
-
-	<ItemGroup>
+	  <MauiXaml Update="Views\company\CompanyRegister.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\CorpInfoPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

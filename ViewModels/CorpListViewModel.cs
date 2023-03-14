@@ -1,8 +1,9 @@
 ﻿using CommunityToolkit.Mvvm;
+using Newtonsoft.Json;
 
 namespace DGSWManager.ViewModels
 {
-    internal class CorpListViewModel
+    public async Task<List<>> CorpListViewModel
     {
     }
 }
