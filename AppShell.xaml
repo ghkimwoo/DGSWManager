@@ -11,7 +11,7 @@
         </Tab>
         <Tab Title="회사"
              Icon="corptabicon.png">
-            <ShellContent ContentTemplate="{DataTemplate views:CorpInfoPage}"/>
+            <ShellContent ContentTemplate="{DataTemplate views:company.CompanyRegister}"/>
         </Tab>
     </TabBar>
 </Shell>

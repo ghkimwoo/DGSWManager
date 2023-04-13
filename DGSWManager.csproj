@@ -72,19 +72,27 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\company\CompanyRegister.xaml.cs">
+	    <DependentUpon>CompanyRegister.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\company\CompanyListPage.xaml.cs">
+	    <DependentUpon>CompanyListPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Views\company\CompanyRegister.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\CorpInfoPage.xaml">
+	  <MauiXaml Update="Views\company\CompanyListPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\SchoolInfoPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="ViewModels\" />
+	  <MauiXaml Update="Views\school\SchoolCafeMenu.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

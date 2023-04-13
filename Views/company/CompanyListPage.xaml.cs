@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
-namespace DGSWManager.Views;
+namespace DGSWManager.Views.company;
 
-public partial class CorpInfoPage : ContentPage
+public partial class CompanyListPage : ContentPage
 {
 	public class Content
 	{
@@ -10,7 +10,7 @@ public partial class CorpInfoPage : ContentPage
 	}
     ObservableCollection<Content> contents = new ObservableCollection<Content>();
     public ObservableCollection<Content> Contents { get { return contents; } }
-    public CorpInfoPage()
+    public CompanyListPage()
 	{
 		InitializeComponent();
         contents.Add(new Content() { ContentName = "Apple", ContentDescription = "An apple is an edible fruit produced by an apple tree (Malus domestica)." });

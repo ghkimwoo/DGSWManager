@@ -9,13 +9,7 @@ public partial class SchoolInfoPage : ContentPage
 
 	private async void testButton_Clicked(Object sender, EventArgs e)
 	{
-
-		string oauthToken = await SecureStorage.Default.GetAsync("NeisApiKey");
-
-		if( oauthToken != null )
-		{
-			await DisplayAlert("INFOMATION", oauthToken, "확인");
-		}
+        await Navigation.PushAsync(new school.SchoolCafeMenu());
     }
 }
 
