@@ -6,13 +6,13 @@ using System.Text;
 
 namespace DGSWManager.Views.school;
 
-public partial class SchoolCafeMenu : ContentPage
+public partial class SchoolTimePage : ContentPage
 {
-    private string _schoolCafeMenu;
+	private string _schoolTime;
     public class Menu
     {
-        public string MMEAL_SC_NM;
-        public string DDISH_NM;
+        public string PERIO;
+        public string ITRT_CNTNT;
     }
     public class Content
     {
@@ -21,13 +21,13 @@ public partial class SchoolCafeMenu : ContentPage
     }
     ObservableCollection<Content> contents = new ObservableCollection<Content>();
     public ObservableCollection<Content> Contents { get { return contents; } }
-    private async void LoadCafeMenu()
+    private async void LoadSchoolTime()
     {
         var config = new ConfigurationBuilder()
             .AddUserSecrets<SchoolCafeMenu>()
             .Build();
         string Token = config["NeisApiKey"];
-        string url = "https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=" + Token + "&Type=json&ATPT_OFCDC_SC_CODE=" + "D10" + "&SD_SCHUL_CODE=" + "7240454" + "&MLSV_YMD=" + DateTime.Now.ToString("yyyyMMdd");
+        string url = "https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=" + Token + "&Type=json&ATPT_OFCDC_SC_CODE=" + "D10" + "&SD_SCHUL_CODE=" + "7240454" + "&ALL_TI_YMD=" + DateTime.Now.ToString("yyyyMMdd") + "&GRADE=" + "3" + "&CLASS_NM=" + "1";
 
 
         var httpClient = new HttpClient();
@@ -38,17 +38,16 @@ public partial class SchoolCafeMenu : ContentPage
 
         string body = await response.Content.ReadAsStringAsync();
         JObject obj = JObject.Parse(body);
-        _schoolCafeMenu = obj["mealServiceDietInfo"][1]["row"].ToString();
+        _schoolTime = obj["hisTimetable"][1]["row"].ToString();
     }
-    public SchoolCafeMenu()
-    {
-        InitializeComponent();
-        LoadCafeMenu();
-        var pObj = JsonConvert.DeserializeObject<List<Menu>>(_schoolCafeMenu);
+    public SchoolTimePage()
+	{
+		InitializeComponent();
+        LoadSchoolTime();
+        var pObj = JsonConvert.DeserializeObject<List<Menu>>(_schoolTime);
         foreach (var item in pObj)
         {
-            string replaceResult = item.DDISH_NM.Replace("<br/>", " ");
-            contents.Add(new Content() { ContentName = item.MMEAL_SC_NM, ContentDescription = replaceResult });
+            contents.Add(new Content() { ContentName = item.PERIO, ContentDescription = item.ITRT_CNTNT });
         }
         collectionView.ItemsSource = contents;
     }
