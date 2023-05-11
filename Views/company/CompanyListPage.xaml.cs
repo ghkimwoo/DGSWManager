@@ -1,23 +1,33 @@
+using DGSWManager.Data;
+using DGSWManager.Models;
 using System.Collections.ObjectModel;
 namespace DGSWManager.Views.company;
 
+
 public partial class CompanyListPage : ContentPage
 {
+    CorprationDatabase database;
 	public class Content
 	{
 		public string ContentName { get; set; }
-		public string ContentDescription { get; set; }
 	}
+    public ObservableCollection<CorprationInfoModel> Items { get; set; } = new();
     ObservableCollection<Content> contents = new ObservableCollection<Content>();
     public ObservableCollection<Content> Contents { get { return contents; } }
-    public CompanyListPage()
+    protected override async void OnNavigatedTo(NavigatedToEventArgs e)
+    {
+        var items = await database.GetItemsAsync();
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            contents.Clear();
+            foreach (var item in items)
+                contents.Add(new Content() { ContentName = item.CorprationName });
+        });
+    }
+    public CompanyListPage(CorprationDatabase corprationDatabase)
 	{
-		InitializeComponent();
-        contents.Add(new Content() { ContentName = "Apple", ContentDescription = "An apple is an edible fruit produced by an apple tree (Malus domestica)." });
-        contents.Add(new Content() { ContentName = "Orange", ContentDescription = "The orange is the fruit of various citrus species in the family Rutaceae." });
-        contents.Add(new Content() { ContentName = "Banana", ContentDescription = "A long curved fruit with soft pulpy flesh and yellow skin when ripe." });
-        contents.Add(new Content() { ContentName = "Grape", ContentDescription = "A berry growing in clusters on a grapevine, eaten as fruit and used in making wine." });
-        contents.Add(new Content() { ContentName = "Mango", ContentDescription = "A mango is an edible stone fruit produced by the tropical tree Mangifera indica." });
+        InitializeComponent(); 
+        database = corprationDatabase;
         collectionView.ItemsSource = contents;
     }
 }

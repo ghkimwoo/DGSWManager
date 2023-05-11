@@ -10,20 +10,38 @@
                     FontSize="20"
                      VerticalOptions="Center" 
                     HorizontalOptions="Center" />
-
+        <Label
+            Text="기업정보"
+            FontSize="Medium"
+            VerticalOptions="Center" 
+            HorizontalOptions="Start"/>
         <Entry
             x:Name="CorpNameEntry"
             Placeholder="기업이름 입력"/>
-
+        <Label
+            Text="사업자등록번호"
+            FontSize="Medium"
+            VerticalOptions="Center" 
+            HorizontalOptions="Start"/>
         <Entry
                     x:Name="BizNoEntry"
                     Placeholder="사업자등록번호 입력(특수기호 제외)"
                     MaxLength="10"
                     Keyboard="Numeric"/>
+        <Label
+            Text="대표자명"
+            FontSize="Medium"
+            VerticalOptions="Center" 
+            HorizontalOptions="Start"/>
         <Entry
                     x:Name="CEOName"
                     Placeholder="대표자명 입력(외국인 사업자일 경우 영문명)"
                     Keyboard="Default"/>
+        <Label
+            Text="개업일자"
+            FontSize="Medium"
+            VerticalOptions="Center" 
+            HorizontalOptions="Start"/>
         <Entry
                     x:Name="opendate"
                     Placeholder="개업일자 입력(특수기호 제외)"

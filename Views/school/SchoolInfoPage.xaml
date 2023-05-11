@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DGSWManager.Views.school.SchoolInfoPage"
+             Title="학교 정보">
+
+    <Grid   Margin="20, 20, 20, 20"
+            RowSpacing="{OnPlatform Default=6, WinUI=20, MacCatalyst=20}"
+            ColumnSpacing="{OnPlatform Default=6, WinUI=20, MacCatalyst=20}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition />
+            <RowDefinition Height="200"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button
+                Text="시간표"
+                Grid.Row="0"
+                TextColor="White"
+                FontSize="Medium"
+                FontAttributes="Bold"
+                BackgroundColor="{AppThemeBinding Dark=#334E68}"
+                Clicked="CafeMenuButton_Clicked"/>
+
+        <Button
+                Text="급식 정보"
+                Grid.Row="0"
+                Grid.Column="1"
+                BorderColor="Black"
+                TextColor="White"
+                FontSize="Medium"
+                FontAttributes="Bold"
+                BackgroundColor="{AppThemeBinding Dark=#334E68}"
+                Clicked="TimeButton_Clicked"/>
+        <Button
+            Text="설정"
+            Grid.Row="1"
+            Grid.ColumnSpan="1"
+            BorderColor="Black"
+            TextColor="White"
+            FontSize="Medium"
+            FontAttributes="Bold"
+            BackgroundColor="{AppThemeBinding Dark=#334E68}"
+            Clicked="SettingButton_Clicked"/>
+    </Grid>
+
+</ContentPage>

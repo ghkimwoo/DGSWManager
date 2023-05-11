@@ -7,7 +7,7 @@
     <TabBar>
         <Tab Title="학교"
              Icon="schooltabicon.png">
-            <ShellContent ContentTemplate="{DataTemplate views:SchoolInfoPage}"/>
+            <ShellContent ContentTemplate="{DataTemplate views:school.SchoolInfoPage}"/>
         </Tab>
         <Tab Title="회사"
              Icon="corptabicon.png">

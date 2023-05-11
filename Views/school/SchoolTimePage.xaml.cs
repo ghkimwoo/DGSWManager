@@ -27,7 +27,7 @@ public partial class SchoolTimePage : ContentPage
             .AddUserSecrets<SchoolCafeMenu>()
             .Build();
         string Token = config["NeisApiKey"];
-        string url = "https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=" + Token + "&Type=json&ATPT_OFCDC_SC_CODE=" + "D10" + "&SD_SCHUL_CODE=" + "7240454" + "&ALL_TI_YMD=" + DateTime.Now.ToString("yyyyMMdd") + "&GRADE=" + "3" + "&CLASS_NM=" + "1";
+        string url = "https://open.neis.go.kr/hub/hisTimetable?KEY=" + Token + "&Type=json&ATPT_OFCDC_SC_CODE=" + "D10" + "&SD_SCHUL_CODE=" + "7240454" + "&ALL_TI_YMD=" + DateTime.Now.ToString("yyyyMMdd") + "&GRADE=" + "3" + "&CLASS_NM=" + "1";
 
 
         var httpClient = new HttpClient();

@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DGSWManager.Views.school.SchoolTimePage"
-             Title="SchoolTimePage">
+             Title="학교 시간표">
     <CollectionView x:Name="collectionView" ItemsSource="{Binding Contents}">
         <CollectionView.ItemTemplate>
             <DataTemplate>
