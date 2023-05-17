@@ -3,15 +3,19 @@
     x:Class="DGSWManager.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:views="clr-namespace:DGSWManager.Views">
+    xmlns:school="clr-namespace:DGSWManager.Views.school"
+    xmlns:company="clr-namespace:DGSWManager.Views.company">
     <TabBar>
         <Tab Title="학교"
              Icon="schooltabicon.png">
-            <ShellContent ContentTemplate="{DataTemplate views:school.SchoolInfoPage}"/>
+            <ShellContent ContentTemplate="{DataTemplate school:SchoolInfoPage}"/>
         </Tab>
         <Tab Title="회사"
              Icon="corptabicon.png">
-            <ShellContent ContentTemplate="{DataTemplate views:company.CompanyRegister}"/>
+            <ShellContent
+                Title="회사 목록"
+                ContentTemplate="{DataTemplate company:CompanyListPage}"
+                Route="CorprationList" />
         </Tab>
     </TabBar>
 </Shell>

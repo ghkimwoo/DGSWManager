@@ -12,7 +12,6 @@ namespace DGSWManager.Models
         [PrimaryKey]
         public int Corp_code { get; set; }
         public string Corp_name { get; set; }
-        public int Stock_code { get; set; }
         public int Modify_date { get; set; }
     }
 }

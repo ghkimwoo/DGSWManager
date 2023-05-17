@@ -15,13 +15,6 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <Rectangle Grid.RowSpan="2"
-                               WidthRequest="60"
-                               HeightRequest="60"
-                               Fill="WhiteSmoke"
-                               Stroke="LightGray"
-                               StrokeThickness="1"
-                               Margin="0, 0, 10, 0"/>
                     <Label Grid.Column="1"
                            Text="{Binding ContentName}"
                            FontAttributes="Bold"/>

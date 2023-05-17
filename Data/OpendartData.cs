@@ -1,47 +1,44 @@
 ﻿using SQLite;
 using DGSWManager.Models;
 
-namespace DGSWManager.Data
+namespace DGSWManager.Data;
+public class OpendartData
 {
-    public class OpendartData
+    SQLiteAsyncConnection Database;
+    public OpendartData()
     {
-        SQLiteAsyncConnection Database;
-        public OpendartData()
-        {
-        }
-        async Task Init()
-        {
-            if (Database is not null)
-                return;
+    }
+    async Task Init()
+    {
+        if (Database is not null)
+            return;
 
-            Database = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
-            var result = await Database.CreateTableAsync<CorpDartListModel>();
-        }
+        Database = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
+        var result = await Database.CreateTableAsync<CorpDartListModel>();
+    }
 
-        public async Task<List<CorpDartListModel>> GetItemsAsync()
+    public async Task<List<CorpDartListModel>> GetItemsAsync()
+    {
+        await Init();
+        return await Database.Table<CorpDartListModel>().ToListAsync();
+    }
+
+    public async Task<int> SaveItemAsync(CorpDartListModel item)
+    {
+        await Init();
+        if (item.Corp_code != 0)
         {
-            await Init();
-            return await Database.Table<CorpDartListModel>().ToListAsync();
+            return await Database.UpdateAsync(item);
         }
-
-        public async Task<int> SaveItemAsync(CorpDartListModel item)
+        else
         {
-            await Init();
-            if (item.Corp_code != 0)
-            {
-                return await Database.UpdateAsync(item);
-            }
-            else
-            {
-                return await Database.InsertAsync(item);
-            }
+            return await Database.InsertAsync(item);
         }
+    }
 
-        public async Task<int> DeleteItemAsync(CorpDartListModel item)
-        {
-            await Init();
-            return await Database.DeleteAsync(item);
-        }
-
+    public async Task<int> DeleteItemAsync(CorpDartListModel item)
+    {
+        await Init();
+        return await Database.DeleteAsync(item);
     }
 }

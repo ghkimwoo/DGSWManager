@@ -19,11 +19,12 @@
         <Button
                 Text="시간표"
                 Grid.Row="0"
+                Grid.Column="0"
                 TextColor="White"
                 FontSize="Medium"
                 FontAttributes="Bold"
                 BackgroundColor="{AppThemeBinding Dark=#334E68}"
-                Clicked="CafeMenuButton_Clicked"/>
+                Clicked="TimeButton_Clicked"/>
 
         <Button
                 Text="급식 정보"
@@ -34,11 +35,11 @@
                 FontSize="Medium"
                 FontAttributes="Bold"
                 BackgroundColor="{AppThemeBinding Dark=#334E68}"
-                Clicked="TimeButton_Clicked"/>
+                Clicked="CafeMenuButton_Clicked"/> 
         <Button
             Text="설정"
             Grid.Row="1"
-            Grid.ColumnSpan="1"
+            Grid.ColumnSpan="2"
             BorderColor="Black"
             TextColor="White"
             FontSize="Medium"

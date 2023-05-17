@@ -1,6 +1,6 @@
 ﻿public static class Constants
 {
-    public const string DatabaseFilename = "./Database/Database.db";
+    public const string DatabaseFilename = "Database.db";
 
     public const SQLite.SQLiteOpenFlags Flags =
         // open the database in read/write mode
