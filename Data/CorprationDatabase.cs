@@ -22,7 +22,7 @@ public class CorprationDatabase
     public async Task<List<CorprationInfoModel>> GetItemsAsync()
     {
         await Init();
-        return await Database.QueryAsync<CorprationInfoModel>("SELECT * FROM [CorprationInfoModel]");
+        return await Database.Table<CorprationInfoModel>().ToListAsync();
     }
     public async Task<CorprationInfoModel> GetItemAsync(int id)
     {

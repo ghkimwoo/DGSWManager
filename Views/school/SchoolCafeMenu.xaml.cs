@@ -8,6 +8,9 @@ namespace DGSWManager.Views.school;
 
 public partial class SchoolCafeMenu : ContentPage
 {
+    private static string mainDir = FileSystem.Current.AppDataDirectory;
+    private static string fileName = "SchoolInfo.json";
+    private static string filePath = System.IO.Path.Combine(mainDir, fileName);
     private string _schoolCafeMenu;
     public class Menu
     {
@@ -23,22 +26,39 @@ public partial class SchoolCafeMenu : ContentPage
     public ObservableCollection<Content> Contents { get { return contents; } }
     private async void LoadCafeMenu()
     {
-        var config = new ConfigurationBuilder()
+        try
+        {
+            // Read the JSON file into a string
+            var jsonString = File.ReadAllText(filePath);
+
+            // Deserialize the string into a JSON object
+            var jsonObject = JsonConvert.DeserializeObject<dynamic>(jsonString);
+
+            // Store the values in variables
+            string eduOfficeCode = jsonObject.EduOfficeCode;
+            string schoolCode = jsonObject.SchoolCode;
+            var config = new ConfigurationBuilder()
             .AddUserSecrets<SchoolCafeMenu>()
             .Build();
-        string Token = config["NeisApiKey"];
-        string url = "https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=" + Token + "&Type=json&ATPT_OFCDC_SC_CODE=" + "D10" + "&SD_SCHUL_CODE=" + "7240454" + "&MLSV_YMD=" + DateTime.Now.ToString("yyyyMMdd");
+
+            string Token = config["NeisApiKey"];
+            string url = "https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=" + Token + "&Type=json&ATPT_OFCDC_SC_CODE=" + eduOfficeCode + "&SD_SCHUL_CODE=" + schoolCode + "&MLSV_YMD=" + DateTime.Now.ToString("yyyyMMdd");
 
 
-        var httpClient = new HttpClient();
-        httpClient.BaseAddress = new Uri(url);
-        var content = new StringContent("", Encoding.UTF8, "application/json");
-        HttpResponseMessage response = httpClient.PostAsync(url, content).Result;
+            var httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(url);
+            var content = new StringContent("", Encoding.UTF8, "application/json");
+            HttpResponseMessage response = httpClient.PostAsync(url, content).Result;
 
 
-        string body = await response.Content.ReadAsStringAsync();
-        JObject obj = JObject.Parse(body);
-        _schoolCafeMenu = obj["mealServiceDietInfo"][1]["row"].ToString();
+            string body = await response.Content.ReadAsStringAsync();
+            JObject obj = JObject.Parse(body);
+            _schoolCafeMenu = obj["mealServiceDietInfo"][1]["row"].ToString();
+        }
+        catch (JsonException)
+        {
+            await DisplayAlert("오류", "사용자 학교 정보가 저장되지 않았습니다.\n새로 설정해주세요.", "확인");
+        }
     }
     public SchoolCafeMenu()
     {
@@ -47,7 +67,7 @@ public partial class SchoolCafeMenu : ContentPage
         var pObj = JsonConvert.DeserializeObject<List<Menu>>(_schoolCafeMenu);
         foreach (var item in pObj)
         {
-            string replaceResult = item.DDISH_NM.Replace("<br/>", " ");
+            string replaceResult = item.DDISH_NM.Replace("<br/>", "\n");
             contents.Add(new Content() { ContentName = item.MMEAL_SC_NM, ContentDescription = replaceResult });
         }
         collectionView.ItemsSource = contents;

@@ -8,7 +8,10 @@ namespace DGSWManager.Views.school;
 
 public partial class SchoolTimePage : ContentPage
 {
-	private string _schoolTime;
+    private static string mainDir = FileSystem.Current.AppDataDirectory;
+    private static string fileName = "SchoolInfo.json";
+    private static string filePath = System.IO.Path.Combine(mainDir, fileName);
+    private string _schoolTime;
     public class Menu
     {
         public string PERIO;
@@ -23,22 +26,43 @@ public partial class SchoolTimePage : ContentPage
     public ObservableCollection<Content> Contents { get { return contents; } }
     private async void LoadSchoolTime()
     {
-        var config = new ConfigurationBuilder()
-            .AddUserSecrets<SchoolCafeMenu>()
-            .Build();
-        string Token = config["NeisApiKey"];
-        string url = "https://open.neis.go.kr/hub/hisTimetable?KEY=" + Token + "&Type=json&ATPT_OFCDC_SC_CODE=" + "D10" + "&SD_SCHUL_CODE=" + "7240454" + "&ALL_TI_YMD=" + DateTime.Now.ToString("yyyyMMdd") + "&GRADE=" + "3" + "&CLASS_NM=" + "1";
+        try
+        {
+            // Read the JSON file into a string
+            var jsonString = File.ReadAllText(filePath);
+
+            // Deserialize the string into a JSON object
+            var jsonObject = JsonConvert.DeserializeObject<dynamic>(jsonString);
+
+            // Store the values in variables
+            string eduOfficeCode = jsonObject.EduOfficeCode;
+            string schoolCode = jsonObject.SchoolCode;
+            string schoolName = jsonObject.SchoolName;
+            int schoolGrade = jsonObject.SchoolGrade;
+            int schoolClass = jsonObject.SchoolClass;
+
+            var config = new ConfigurationBuilder()
+                .AddUserSecrets<SchoolCafeMenu>()
+                .Build();
+            string Token = config["NeisApiKey"];
+            string url = "https://open.neis.go.kr/hub/hisTimetable?KEY=" + Token + "&Type=json&ATPT_OFCDC_SC_CODE=" + eduOfficeCode +
+                "&SD_SCHUL_CODE=" + schoolCode + "&ALL_TI_YMD=" + DateTime.Now.ToString("yyyyMMdd") + "&GRADE=" + schoolGrade + "&CLASS_NM=" + schoolClass;
+
+            var httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(url);
+            var content = new StringContent("", Encoding.UTF8, "application/json");
+            HttpResponseMessage response = httpClient.PostAsync(url, content).Result;
 
 
-        var httpClient = new HttpClient();
-        httpClient.BaseAddress = new Uri(url);
-        var content = new StringContent("", Encoding.UTF8, "application/json");
-        HttpResponseMessage response = httpClient.PostAsync(url, content).Result;
-
-
-        string body = await response.Content.ReadAsStringAsync();
-        JObject obj = JObject.Parse(body);
-        _schoolTime = obj["hisTimetable"][1]["row"].ToString();
+            string body = await response.Content.ReadAsStringAsync();
+            JObject obj = JObject.Parse(body);
+            _schoolTime = obj["hisTimetable"][1]["row"].ToString();
+        }
+        catch (JsonException)
+        {
+            await DisplayAlert("오류", "사용자 학교 정보가 저장되지 않았습니다.\n새로 설정해주세요.", "확인");
+        }
+        
     }
     public SchoolTimePage()
 	{

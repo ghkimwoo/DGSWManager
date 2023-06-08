@@ -23,8 +23,10 @@ public partial class CompanyListPage : ContentPage
         MainThread.BeginInvokeOnMainThread(() =>
         {
             Items.Clear();
-            foreach (var item in items)
+            foreach(var item in items)
+            {
                 Items.Add(item);
+            }        
         });
     }
     async void OnItemAdded(object sender, EventArgs e)

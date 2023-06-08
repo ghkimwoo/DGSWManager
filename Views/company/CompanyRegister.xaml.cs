@@ -16,6 +16,8 @@ public partial class CompanyRegister : ContentPage
     private static string mainDir = FileSystem.Current.AppDataDirectory;
     private static string fileName = "CORPCODE.xml";
     private static string filePath = System.IO.Path.Combine(mainDir, fileName);
+    static readonly HttpClient httpClient = new HttpClient();
+
     public CorprationInfoModel Item
     {
         get => BindingContext as CorprationInfoModel;
@@ -52,7 +54,6 @@ public partial class CompanyRegister : ContentPage
 
         string jsonString = JsonConvert.SerializeObject(bizJson);
 
-        var httpClient = new HttpClient();
 		httpClient.BaseAddress = new Uri(url);
         var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
         HttpResponseMessage response = httpClient.PostAsync(url, content).Result;
@@ -63,7 +64,7 @@ public partial class CompanyRegister : ContentPage
         string status = obj["data"][0]["tax_type"].ToString();
 
 
-        bool answer = await DisplayAlert("조회 결과", status+"입니다."+"\n"+"저장하시겠습니까?", "저장", "취소");
+        bool answer = await DisplayAlert("조회 결과", "상태 : " + status + "\n"+"저장하시겠습니까?", "저장", "취소");
         if (answer)
         {
             await database.SaveItemAsync(Item);
@@ -79,51 +80,43 @@ public partial class CompanyRegister : ContentPage
             .AddUserSecrets<CompanyRegister>()
             .Build();
         string Token = config["OpenDartKey"];
-        string ZipResult = callWebClientZipSave("https://opendart.fss.or.kr/api/corpCode.xml?crtfc_key=" + Token);
-
+        Task<string> task1 = callWebClientZipSave("https://opendart.fss.or.kr/api/corpCode.xml?crtfc_key=" + Token);
+        string ZipResult = task1.Result;
         ExtractZip(ZipResult);
         SaveXMLData(filePath);
     }
 
-    protected string callWebClientZipSave(string targetURL)
+    protected async Task<string> callWebClientZipSave(string targetURL)
     {
         string result = string.Empty;
         Byte[] bytes = null;
         try
         {
-            WebClient client = new WebClient();
+            HttpClient client = new HttpClient();
 
             //헤더값 추가
-            client.Headers.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.3; WOW64; Trident/7.0)");
+            client.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.3; WOW64; Trident/7.0)");
 
-            using (Stream data = client.OpenRead(targetURL))
+            using (HttpResponseMessage response = await client.GetAsync(targetURL))
             {
-                byte[] buffer = new byte[16 * 1024];
-                using (MemoryStream ms = new MemoryStream())
+                using (HttpContent content = response.Content)
                 {
-                    int read;
-                    while ((read = data.Read(buffer, 0, buffer.Length)) > 0)
+                    bytes = await content.ReadAsByteArrayAsync();
+                    string zipFileName = "corpCode_" + DateTime.Now.ToShortDateString() + ".zip";
+
+                    using (MemoryStream ms = new MemoryStream(bytes))
                     {
-                        ms.Write(buffer, 0, read);
+                        //파일 정보 정리
+                        FileStream file = new FileStream(mainDir + "\\" + zipFileName, FileMode.Create, FileAccess.Write);
+                        ms.WriteTo(file);
+
+                        file.Close();
+                        ms.Close();
                     }
-                    bytes = ms.ToArray();
+
+                    result = mainDir + "\\" + zipFileName;
                 }
-                data.Close();
             }
-
-            string zipFileName = "corpCode_" + DateTime.Now.ToShortDateString() + ".zip";
-
-            using (MemoryStream ms = new MemoryStream(bytes))
-            {
-                //파일 정보 정리
-                FileStream file = new FileStream(mainDir + "\\" + zipFileName, FileMode.Create, FileAccess.Write);
-                ms.WriteTo(file);
-
-                file.Close();
-                ms.Close();
-            }
-
-            result = mainDir + "\\" + zipFileName;
         }
         catch (Exception e)
         {
