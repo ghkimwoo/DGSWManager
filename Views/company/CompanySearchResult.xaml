@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DGSWManager.Views.company.CompanySearchResult"
+             Title="회사 검색 결과">
+    <VerticalStackLayout>
+        <Label
+            Text="회사 이름"/>
+        <Entry
+            x:Name="CompanyName"
+            IsReadOnly="True"/>
+        <Label
+            Text="사업자 등록번호"/>
+        <Entry
+            x:Name="CompanyNumber"
+            IsReadOnly="True"/>
+        <Label
+            Text="순이익"/>
+        <Entry
+            x:Name="netIncomeEntry"/>
+        <Label
+            Text="영업이익"/>
+        <Entry
+            x:Name="operatingProfitEntry"/>
+        <Label
+            Text="안정성 결과"/>
+        <Entry
+            x:Name="stabilityEntry"/>
+        <Button
+            x:Name="SearchButton"
+            Text="검색결과 확인"
+            Clicked="Button_Clicked"/>
+        <WebView 
+            x:Name="Webview"
+            Source="https://sminfo.mss.go.kr/cm/sv/CSV001R0.do"
+            IsVisible="False"/>
+    </VerticalStackLayout>
+</ContentPage>

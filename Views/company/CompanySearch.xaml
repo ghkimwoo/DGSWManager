@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DGSWManager.Views.company.CompanyRegister"
-             Title="{Binding CorprationName}"
+             x:Class="DGSWManager.Views.company.CompanySearch"
+             Title="회사 정보 조회"
              xmlns:models="clr-namespace:DGSWManager.Models"
              x:DataType="models:CorprationInfoModel">
     <ScrollView>
@@ -23,8 +23,7 @@
                 HorizontalOptions="Start"/>
             <Entry
                 x:Name="CorpNameEntry"
-                Placeholder="기업이름 입력"
-                Text="{Binding CorprationName}"/>
+                Placeholder="기업이름 입력"/>
             <Label
                 Text="사업자등록번호"
                 FontSize="Medium"
@@ -34,8 +33,7 @@
                 x:Name="BizNoEntry"
                 Placeholder="사업자등록번호 입력(특수기호 제외)"
                 MaxLength="10"
-                Keyboard="Numeric"
-                Text="{Binding CorprationId}"/>
+                Keyboard="Numeric"/>
             <Button
                 x:Name="renewButton"
                 Text="고유번호 갱신"

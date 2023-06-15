@@ -36,7 +36,8 @@
         <Button
             x:Name="SaveButton"
             Text="확인"
-            HorizontalOptions="CenterAndExpand"/>
+            HorizontalOptions="CenterAndExpand"
+            Clicked="SaveButton_Clicked"/>
     </VerticalStackLayout>
     <ContentPage.BindingContext>
         <local:ComboBoxViewModel/>

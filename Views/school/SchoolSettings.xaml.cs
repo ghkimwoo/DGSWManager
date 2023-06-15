@@ -28,7 +28,7 @@ public partial class SchoolSettings : ContentPage
 
 	private async void SaveButton_Clicked(object sender, EventArgs e)
 	{
-		if(!File.Exists(filePath))
+        if(!File.Exists(filePath))
 		{
 			File.Create(filePath);
 		}
@@ -49,6 +49,7 @@ public partial class SchoolSettings : ContentPage
         var content = new StringContent("", Encoding.UTF8, "application/json");
         HttpResponseMessage response = httpClient.PostAsync(url, content).Result;
         string body = await response.Content.ReadAsStringAsync();
+        
         try
         {
             JObject obj = JObject.Parse(body);
@@ -66,7 +67,11 @@ public partial class SchoolSettings : ContentPage
                 new JProperty("SchoolCode", SchoolCode),
                 new JProperty("SchoolGrade", Convert.ToInt32(SchoolGrade.Text)),
                 new JProperty("SchoolClass", Convert.ToInt32(SchoolClass.Text)));
-            File.WriteAllText(filePath, jObject.ToString());
+            TextWriter tw = new StreamWriter(filePath);
+            tw.WriteLine(jObject.ToString());
+            tw.Close();
+            await DisplayAlert("완료", "설정이 완료되었습니다.", "확인");
+            Device.BeginInvokeOnMainThread(async () => await Navigation.PopAsync());
         }
         catch (JsonException)
         {

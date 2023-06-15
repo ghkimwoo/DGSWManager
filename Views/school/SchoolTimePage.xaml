@@ -3,7 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DGSWManager.Views.school.SchoolTimePage"
              Title="학교 시간표">
-    <CollectionView x:Name="collectionView" ItemsSource="{Binding Contents}">
+    <StackLayout>
+        <Label
+            Text="확인을 눌러주세요"/>
+        <Button
+            x:Name="SelectButton"
+            Text="확인"
+            Clicked="Button_selected"/>
+        <CollectionView x:Name="collectionView" ItemsSource="{Binding Contents}">
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <Grid Padding="3">
@@ -27,4 +34,5 @@
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>
+    </StackLayout>
 </ContentPage>

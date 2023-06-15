@@ -24,7 +24,7 @@ public partial class SchoolCafeMenu : ContentPage
     }
     ObservableCollection<Content> contents = new ObservableCollection<Content>();
     public ObservableCollection<Content> Contents { get { return contents; } }
-    private async void LoadCafeMenu()
+    private async Task LoadCafeMenu()
     {
         try
         {
@@ -42,7 +42,8 @@ public partial class SchoolCafeMenu : ContentPage
             .Build();
 
             string Token = config["NeisApiKey"];
-            string url = "https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=" + Token + "&Type=json&ATPT_OFCDC_SC_CODE=" + eduOfficeCode + "&SD_SCHUL_CODE=" + schoolCode + "&MLSV_YMD=" + DateTime.Now.ToString("yyyyMMdd");
+            string url = $"https://open.neis.go.kr/hub/mealServiceDietInfo?KEY={Token}&Type=json&ATPT_OFCDC_SC_CODE={eduOfficeCode}" + 
+                $"&SD_SCHUL_CODE={schoolCode}&MLSV_YMD={DateTime.Today.ToString("yyyyMMdd")}";
 
 
             var httpClient = new HttpClient();
@@ -55,21 +56,37 @@ public partial class SchoolCafeMenu : ContentPage
             JObject obj = JObject.Parse(body);
             _schoolCafeMenu = obj["mealServiceDietInfo"][1]["row"].ToString();
         }
-        catch (JsonException)
+        catch (Exception)
         {
             await DisplayAlert("오류", "사용자 학교 정보가 저장되지 않았습니다.\n새로 설정해주세요.", "확인");
         }
     }
+    private async void Button_Selected(object sender, EventArgs e)
+    {
+        try
+        {
+            SelectButton.IsEnabled = false;
+            SelectButton.Text = "네트워크 통신중입니다. 잠시만 기다려주세요.";
+            await LoadCafeMenu();
+            var pObj = JsonConvert.DeserializeObject<List<Menu>>(_schoolCafeMenu);
+            contents.Clear();
+            foreach (var item in pObj)
+            {
+                string replaceResult = item.DDISH_NM.Replace("<br/>", "\n");
+                contents.Add(new Content() { ContentName = item.MMEAL_SC_NM, ContentDescription = replaceResult });
+            }
+            collectionView.ItemsSource = contents;
+            SelectButton.IsEnabled = true;
+            SelectButton.Text = "정상적으로 로딩이 완료되었습니다.";
+        }
+        catch (Exception)
+        {
+            Device.BeginInvokeOnMainThread(async () => await Navigation.PopAsync());
+        }
+        
+    }
     public SchoolCafeMenu()
     {
         InitializeComponent();
-        LoadCafeMenu();
-        var pObj = JsonConvert.DeserializeObject<List<Menu>>(_schoolCafeMenu);
-        foreach (var item in pObj)
-        {
-            string replaceResult = item.DDISH_NM.Replace("<br/>", "\n");
-            contents.Add(new Content() { ContentName = item.MMEAL_SC_NM, ContentDescription = replaceResult });
-        }
-        collectionView.ItemsSource = contents;
     }
 }

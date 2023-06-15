@@ -3,28 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DGSWManager.Views.school.SchoolCafeMenu"
              Title="학교 급식표">
-    <CollectionView x:Name="collectionView" ItemsSource="{Binding Contents}">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Grid Padding="3">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="1"
+    <StackLayout>
+        <Label
+            Text="확인을 눌러주세요."/>
+        <Button
+            x:Name="SelectButton"
+            Text="확인" 
+            Clicked="Button_Selected"/>
+        <CollectionView x:Name="collectionView" ItemsSource="{Binding Contents}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="1"
                            Text="{Binding ContentName}"
                            FontAttributes="Bold"/>
-                    <Label Grid.Row="1"
+                        <Label Grid.Row="1"
                            Grid.Column="1"
                            Text="{Binding ContentDescription}"
                            FontAttributes="Italic"
                            VerticalOptions="End"/>
-                </Grid>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
 </ContentPage>

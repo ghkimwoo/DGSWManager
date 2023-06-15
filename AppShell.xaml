@@ -14,7 +14,7 @@
              Icon="corptabicon.png">
             <ShellContent
                 Title="회사 목록"
-                ContentTemplate="{DataTemplate company:CompanyListPage}"
+                ContentTemplate="{DataTemplate company:CompanySearch}"
                 Route="CorprationList" />
         </Tab>
     </TabBar>
