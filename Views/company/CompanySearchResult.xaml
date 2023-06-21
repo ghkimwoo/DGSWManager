@@ -30,9 +30,5 @@
             x:Name="SearchButton"
             Text="검색결과 확인"
             Clicked="Button_Clicked"/>
-        <WebView 
-            x:Name="Webview"
-            Source="https://sminfo.mss.go.kr/cm/sv/CSV001R0.do"
-            IsVisible="False"/>
     </VerticalStackLayout>
 </ContentPage>

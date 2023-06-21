@@ -88,8 +88,21 @@ public partial class CompanySearchResult : ContentPage
             HttpResponseMessage response2 = await client.GetAsync(url);
             string body2 = await response2.Content.ReadAsStringAsync();
             JObject obj2 = JObject.Parse(body2);
-            netIncome = obj2["list"][0]["thstrm_amount"]["net_income"].Value<double>();
-            operatingProfit = obj2["list"][0]["thstrm_amount"]["operating_profit"].Value<double>();
+            foreach (JObject item in obj2["list"])
+            {
+                if(item["sj_nm"].ToString() == "손익계산서" && item["account_nm"].ToString() == "영업이익")
+                {
+                    netIncome = item["thstrm_amount"].Value<double>();
+                    netIncomeEntry.Text = netIncome.ToString();
+                    
+                }
+                if (item["sj_nm"].ToString() == "손익계산서" && item["account_nm"].ToString() == "당기순이익")
+                {
+                    operatingProfit = item["thstrm_amount"].Value<double>();
+                    operatingProfitEntry.Text = operatingProfit.ToString();
+                    break;
+                }
+            }
 
             if (operatingProfit > 0 && netIncome > 0)
             {
@@ -112,8 +125,8 @@ public partial class CompanySearchResult : ContentPage
             SearchButton.Text = "Error";
             netIncomeEntry.IsReadOnly = false;
             operatingProfitEntry.IsReadOnly = false;
-            Webview.IsVisible = true;
-            await DisplayAlert("오류", "보고서 정보를 찾을 수 없습니다.\n수동 설정으로 전환합니다.", "확인");            
+            await DisplayAlert("오류", "보고서 정보를 찾을 수 없습니다.\n수동 설정으로 전환합니다.", "확인");
+            await Launcher.OpenAsync("https://sminfo.mss.go.kr/cm/sv/CSV001R0.do");
         }
         
 

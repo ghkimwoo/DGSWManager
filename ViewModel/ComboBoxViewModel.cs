@@ -25,7 +25,7 @@ namespace DGSWManager.ViewModel
                 new ComboBoxModel() { EduOfficeName = "울산광역시교육청", EduOfficeCode = "H10"},
                 new ComboBoxModel() { EduOfficeName = "세종특별자치시교육청", EduOfficeCode = "I10"},
                 new ComboBoxModel() { EduOfficeName = "경기도교육청", EduOfficeCode = "J10"},
-                new ComboBoxModel() { EduOfficeName = "강원도교육청", EduOfficeCode = "K10"},
+                new ComboBoxModel() { EduOfficeName = "강원특별자치도교육청", EduOfficeCode = "K10"},
                 new ComboBoxModel() { EduOfficeName = "충청북도교육청", EduOfficeCode = "M10"},
                 new ComboBoxModel() { EduOfficeName = "충청남도교육청", EduOfficeCode = "N10"},
                 new ComboBoxModel() { EduOfficeName = "전라북도교육청", EduOfficeCode = "P10"},

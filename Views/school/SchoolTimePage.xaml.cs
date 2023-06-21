@@ -44,7 +44,8 @@ public partial class SchoolTimePage : ContentPage
 
             var config = new ConfigurationBuilder().AddUserSecrets<SchoolCafeMenu>().Build();
             string Token = config["NeisApiKey"];
-            string url = "https://open.neis.go.kr/hub/hisTimetable?KEY=" + Token + "&Type=json&ATPT_OFCDC_SC_CODE=" + eduOfficeCode + "&SD_SCHUL_CODE=" + schoolCode + "&ALL_TI_YMD=" + DateTime.Now.ToString("yyyyMMdd") + "&GRADE=" + schoolGrade + "&CLASS_NM=" + schoolClass;
+            string url = "https://open.neis.go.kr/hub/hisTimetable?KEY=" + Token + "&Type=json&ATPT_OFCDC_SC_CODE=" + eduOfficeCode + 
+                "&SD_SCHUL_CODE=" + schoolCode + "&ALL_TI_YMD=" + DateTime.Now.ToString("yyyyMMdd") + "&GRADE=" + schoolGrade + "&CLASS_NM=" + schoolClass;
 
             var httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(url);
