@@ -56,6 +56,10 @@ public partial class SchoolCafeMenu : ContentPage
             JObject obj = JObject.Parse(body);
             _schoolCafeMenu = obj["mealServiceDietInfo"][1]["row"].ToString();
         }
+        catch (NullReferenceException)
+        {
+            await DisplayAlert("오류", "작성중인 식단 또는 [식단공개확정] 처리가 되지 않은 식단은 \n조회되지 않을 수 있습니다.\n며칠 후 다시 시도해주세요.", "확인");
+        }
         catch (Exception)
         {
             await DisplayAlert("오류", "사용자 학교 정보가 저장되지 않았습니다.\n새로 설정해주세요.", "확인");
